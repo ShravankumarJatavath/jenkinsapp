@@ -18,19 +18,19 @@ pipeline {
 
         stage('Build Docker Image') {
             steps {
-                sh '''
+                sh """
                 docker build -t my-k8s-app:${BUILD_NUMBER} .
                 docker tag my-k8s-app:${BUILD_NUMBER} jatavathshravan/my-k8s-app:${BUILD_NUMBER}
-                '''
+                """
             }
         }
 
         stage('Push Docker Image') {
-    steps {
-        withDockerRegistry([credentialsId: 'dockerhub-creds', url: 'https://index.docker.io/v1/']) {
-            sh 'docker push jatavathshravan/my-k8s-app:8'
+            steps {
+                withDockerRegistry([credentialsId: 'dockerhub-creds', url: 'https://index.docker.io/v1/']) {
+                    sh "docker push jatavathshravan/my-k8s-app:${BUILD_NUMBER}"
+                }
+            }
         }
     }
-}
-    } 
 }
