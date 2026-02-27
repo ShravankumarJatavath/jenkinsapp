@@ -27,9 +27,7 @@ pipeline {
 
         stage('Push Docker Image') {
             steps {
-                withDockerRegistry([credentialsId: 'dockerhub-creds', url: 'https://index.docker.io/v1/']) {
-                    sh "docker push jatavathshravan/my-k8s-app:${BUILD_NUMBER}"
-                }
+                sh "docker push jatavathshravan/my-k8s-app:${BUILD_NUMBER}"
             }
         }
     }
