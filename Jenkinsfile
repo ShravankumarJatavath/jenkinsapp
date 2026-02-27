@@ -26,9 +26,11 @@ pipeline {
         }
 
         stage('Push Docker Image') {
-            steps {
-                sh 'docker push jatavathshravan/my-k8s-app:${BUILD_NUMBER}'
-            }
+    steps {
+        withDockerRegistry([credentialsId: 'dockerhub-creds', url: 'https://index.docker.io/v1/']) {
+            sh 'docker push jatavathshravan/my-k8s-app:8'
         }
+    }
+}
     } 
 }
